@@ -1,0 +1,29 @@
+{
+	"name": "zgabievi/sms",
+	"description": "Several Georgian SMS APIs Integration",
+	"keywords": [
+		"sms",
+		"sms api",
+		"smsoffice",
+		"msg",
+		"message"
+	],
+	"homepage": "https://github.com/zgabievi/sms",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "zgabievi",
+			"email": "zura.gabievi@gmail.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=5.4.0",
+		"laravel/framework": "~5.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Gabievi\\SMS\\": "src/"
+		}
+	}
+}
