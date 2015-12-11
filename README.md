@@ -7,8 +7,8 @@ SMS system for [Laravel 5.1](http://laravel.com/)
     - [Composer](#composer)
     - [Laravel](#laravel)
 - [Usage](#usage)
-    - [MSG][#msg]
-    - [SMSOffice][#smsoffice]
+    - [MSG](#msg)
+    - [SMSOffice](#smsoffice)
 - [Config](#config)
 - [License](#license)
 
