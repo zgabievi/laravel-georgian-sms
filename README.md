@@ -173,7 +173,7 @@ SMS_SENDER
 
 ## License
 
-SMS is an open-sourced laravel package licensed under the MIT license
+SMS is an open-sourced laravel package licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## TODO
 - [ ] Need to be good tested
