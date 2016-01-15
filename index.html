@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>SMS by zgabievi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">SMS</h1>
+      <h2 class="project-tagline">SMS Sender for Laravel 5.*</h2>
+      <a href="https://github.com/zgabievi/SMS" class="btn">View on GitHub</a>
+      <a href="https://github.com/zgabievi/SMS/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/zgabievi/SMS/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="sms" class="anchor" href="#sms" aria-hidden="true"><span class="octicon octicon-link"></span></a>SMS</h1>
+
+<p>SMS system for <a href="http://laravel.com/">Laravel 5.1</a></p>
+
+<h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
+
+<ul>
+<li>
+<a href="#installation">Installation</a>
+
+<ul>
+<li><a href="#composer">Composer</a></li>
+<li><a href="#laravel">Laravel</a></li>
+</ul>
+</li>
+<li>
+<a href="#usage">Usage</a>
+
+<ul>
+<li><a href="#msg">MSG</a></li>
+<li><a href="#smsoffice">SMSOffice</a></li>
+</ul>
+</li>
+<li><a href="#config">Config</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a id="composer" class="anchor" href="#composer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Composer</h3>
+
+<p>Run composer command in your terminal.</p>
+
+<pre><code>composer require zgabievi/sms
+</code></pre>
+
+<h3>
+<a id="laravel" class="anchor" href="#laravel" aria-hidden="true"><span class="octicon octicon-link"></span></a>Laravel</h3>
+
+<p>Open <code>config/app.php</code> and find the <code>providers</code> key. Add <code>SMSServiceProvider</code> to the array.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">Gabievi\SMS\</span><span class="pl-c1">SMSServiceProvider</span><span class="pl-k">::</span><span class="pl-c1">class</span></span></pre></div>
+
+<p>Find the <code>aliases</code> key and add <code>Facade</code> to the array. </p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-s"><span class="pl-pds">'</span>SMS<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">Gabievi\SMS\Facades\</span><span class="pl-c1">SMS</span><span class="pl-k">::</span><span class="pl-c1">class</span></span></pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="msg" class="anchor" href="#msg" aria-hidden="true"><span class="octicon octicon-link"></span></a>MSG</h3>
+
+<p>You can send messages using method:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">SMS</span><span class="pl-k">::</span>send(<span class="pl-smi">$receiver</span>, <span class="pl-smi">$message</span>)</span></pre></div>
+
+<p>Where <code>$receiver</code> will be phone number without <strong>+</strong> or <strong>00</strong> symbols</p>
+
+<p>and <code>$message</code> will be text to be sent</p>
+
+<p>Return after success will be:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>code<span class="pl-pds">"</span></span>: <span class="pl-ii">STATUS_CODE</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>message_id<span class="pl-pds">"</span></span>: <span class="pl-ii">MESSAGE_ID</span>
+}</pre></div>
+
+<p>and after error:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: <span class="pl-c1">false</span>
+}</pre></div>
+
+<hr>
+
+<p>You can check status using method:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">SMS</span><span class="pl-k">::</span>check(<span class="pl-smi">$message_id</span>)</span></pre></div>
+
+<p>Where <code>$message_id</code> will be MESSAGE_ID from send method.</p>
+
+<p>Return after success will be:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>code<span class="pl-pds">"</span></span>: <span class="pl-ii">STATUS_CODE</span>
+}</pre></div>
+
+<p>and after error:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: <span class="pl-c1">false</span>
+}</pre></div>
+
+<h3>
+<a id="smsoffice" class="anchor" href="#smsoffice" aria-hidden="true"><span class="octicon octicon-link"></span></a>SMSOffice</h3>
+
+<p>You can send messages using method:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">SMS</span><span class="pl-k">::</span>send(<span class="pl-smi">$receiver</span>, <span class="pl-smi">$message</span>)</span></pre></div>
+
+<p>Where <code>$receiver</code> will be phone number without <strong>+</strong> or <strong>00</strong> symbols</p>
+
+<p>several numbers implode with <strong>,</strong>. Ex: 995592000000,995593111111,995594222222</p>
+
+<p>and <code>$message</code> will be text to be sent. Max: 480 symbols</p>
+
+<p>Return after success will be:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>code<span class="pl-pds">"</span></span>: <span class="pl-ii">STATUS_CODE</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>reference<span class="pl-pds">"</span></span>: <span class="pl-ii">UNIQID</span>
+}</pre></div>
+
+<p>and after error:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: <span class="pl-c1">false</span>
+}</pre></div>
+
+<hr>
+
+<p>To see your balance use:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">SMS</span><span class="pl-k">::</span>getBalance()</span></pre></div>
+
+<p>You will get number of messages you have left</p>
+
+<h2>
+<a id="config" class="anchor" href="#config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Config</h2>
+
+<p>Publish SMS config file using command:</p>
+
+<pre><code>php artisan vendor:publish
+</code></pre>
+
+<p>Created file <code>config\sms.php</code>. Inside you can change configuration as you wish.</p>
+
+<p>Set default provider <code>smsoffice</code> or <code>msg</code></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-s"><span class="pl-pds">'</span>default<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>smsoffice<span class="pl-pds">'</span></span></span></pre></div>
+
+<p>You can configure provider credentials in your config or <code>.env</code> file</p>
+
+<p>Environment keys are:</p>
+
+<h4>
+<a id="msg-1" class="anchor" href="#msg-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>MSG</h4>
+
+<pre><code>MSG_USERNAME
+MSG_PASSWORD
+MSG_CLIENT_ID
+MSG_SERVICE_ID
+</code></pre>
+
+<h4>
+<a id="smsoffice-1" class="anchor" href="#smsoffice-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>SMSOffice</h4>
+
+<pre><code>SMS_KEY
+SMS_SENDER
+</code></pre>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>SMS is an open-sourced laravel package licensed under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
+
+<ul>
+<li>[ ] Need to be good tested</li>
+<li>[ ] Add more providers</li>
+<li>[ ] Write test cases</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/zgabievi/SMS">SMS</a> is maintained by <a href="https://github.com/zgabievi">zgabievi</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
