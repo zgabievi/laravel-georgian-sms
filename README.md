@@ -1,6 +1,6 @@
 #SMS
 
-SMS system for [Laravel 5.1](http://laravel.com/)
+SMS system for [Laravel 5.*](http://laravel.com/)
 
 ## Table of Contents
 - [Installation](#installation)
