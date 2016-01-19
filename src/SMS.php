@@ -2,9 +2,6 @@
 
 namespace Gabievi\SMS;
 
-use Gabievi\SMS\Contracts\SMSOffice;
-use Gabievi\SMS\Contracts\MSG;
-
 class SMS
 {
 	/**
@@ -56,7 +53,7 @@ class SMS
 				'key' => $this->config['key'],
 				'destination' => $receiver,
 				'sender' => $this->config['sender'],
-				'content' => urlencode($message),
+				'content' => $message,
 				'reference' => $reference,
 			];
 
