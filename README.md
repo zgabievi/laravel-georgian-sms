@@ -42,7 +42,7 @@ Find the `aliases` key and add `Facade` to the array.
 
 ## Usage
 
-### MSG
+### MSG (Magti SMS Gateway)
 
 You can send messages using method:
 
