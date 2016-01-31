@@ -6,7 +6,7 @@
 [![Total Downloads](https://poser.pugx.org/zgabievi/sms/d/total.png)](https://packagist.org/packages/zgabievi/sms)
 [![License](https://poser.pugx.org/zgabievi/sms/license)](https://packagist.org/packages/zgabievi/sms)
 
-SMS System for [Laravel 5.*](http://laravel.com/)
+Georgian SMS Providers Integration for [Laravel 5.*](http://laravel.com/)
 
 ## Table of Contents
 - [Installation](#installation)
