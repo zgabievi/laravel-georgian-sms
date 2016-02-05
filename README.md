@@ -48,10 +48,10 @@ Find the `aliases` and add `Facade` to the array.
 
 | Method                                                 | MAGTI | SMSOFFICE | SMSCO |
 |--------------------------------------------------------|-------|-----------|-------|
-| SMS::Send($numbers, $message, $additional_params = []) |   +   |     +     |   +   |
-| SMS::Schedule($numbers, $message, $datetime)           |   -   |     -     |   +   |
-| SMS::Status($msg_id)                                   |   +   |     -     |   +   |
-| SMS::Balance()                                         |   -   |     +     |   -   |
+| SMS::Send($numbers, $message, $additional_params = []) | **+** |   **+**   | **+** |
+| SMS::Schedule($numbers, $message, $datetime)           | **-** |   **-**   | **+** |
+| SMS::Status($msg_id)                                   | **+** |   **-**   | **+** |
+| SMS::Balance()                                         | **-** |   **+**   | **-** |
 
 - `$numbers` - comma separated numbers or number, with format: **9955XXXXXXXX**
 - `$message` - Text message wich will be sent to the numbers.
@@ -61,17 +61,17 @@ Find the `aliases` and add `Facade` to the array.
 
 #### Allowed symbols to use in message:
 
-| Symbol | Description                                                      |
-|--------|------------------------------------------------------------------|
-| a-z    | Characters in the range between **a** and **z** (case sensitive) |
-| A-Z    | Characters in the range between **A** and **Z** (case sensitive) |
-| 0-9    | Character in the range between **0** and **9**                   |
-| .      | Point                                                            |
-| _      | Undercsore                                                       |
-| -      | Dash                                                             |
-| "      | Double Quotes                                                    |
-| '      | Single Quote                                                     |
-|        | Space                                                            |
+| Symbol  | Description                                                      |
+|---------|------------------------------------------------------------------|
+| **a-z** | Characters in the range between **a** and **z** (case sensitive) |
+| **A-Z** | Characters in the range between **A** and **Z** (case sensitive) |
+| **0-9** | Character in the range between **0** and **9**                   |
+| **.**   | Point                                                            |
+| **_**   | Undercsore                                                       |
+| **-**   | Dash                                                             |
+| **"**   | Double Quotes                                                    |
+| **'**   | Single Quote                                                     |
+|         | Space                                                            |
 
 ## Config
 
@@ -125,10 +125,10 @@ You can configure provider credentials in your config or `.env` file
 
 | KEY            | MAGTI | SMSOFFICE | SMSCO |
 |----------------|-------|-----------|-------|
-| SMS_USERNAME   |   +   |   BRAND   |   +   |
-| SMS_PASSWORD   |   +   |    KEY    |   +   |
-| SMS_CLIENT_ID  |   +   |     -     |   -   |
-| SMS_SERVICE_ID |   +   |     -     |   -  |
+| SMS_USERNAME   | **+** |   BRAND   | **+** |
+| SMS_PASSWORD   | **+** |    KEY    | **+** |
+| SMS_CLIENT_ID  | **+** |   **-**   | **-** |
+| SMS_SERVICE_ID | **+** |   **-**   | **-** |
 
 ## License
 
