@@ -57,6 +57,7 @@ Find the `aliases` and add `Facade` to the array.
 `$message` - Text message wich will be sent to the numbers.
 
 Allowed symbols table:
+
 | Symbol | Description                                                      |
 |--------|------------------------------------------------------------------|
 | a-z    | Characters in the range between **a** and **z** (case sensitive) |
