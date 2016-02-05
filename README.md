@@ -1,10 +1,10 @@
 #SMS
 
-
+[![SMS](http://i.imgsafe.org/b793aa7.png)]()
 
 [![Latest Stable Version](https://poser.pugx.org/zgabievi/sms/version.png)](https://packagist.org/packages/zgabievi/sms)
 [![Total Downloads](https://poser.pugx.org/zgabievi/sms/d/total.png)](https://packagist.org/packages/zgabievi/sms)
-[![License](https://poser.pugx.org/zgabievi/sms/license)](https://packagist.org/packages/zgabievi/sms)
+[![License](https://poser.pugx.org/zgabievi/sms/license)](https://github.com/zgabievi/SMS)
 
 Georgian SMS Providers Integration for [Laravel 5.*](http://laravel.com/)
 

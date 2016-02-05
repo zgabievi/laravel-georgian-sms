@@ -6,15 +6,14 @@ use Illuminate\Support\ServiceProvider;
 
 class SMSServiceProvider extends ServiceProvider
 {
+
 	/**
 	 * Bootstrap the application services.
 	 * @return void
 	 */
 	public function boot()
 	{
-		$this->publishes([
-			__DIR__ . '/config/sms.php' => config_path('sms.php'),
-		]);
+		$this->publishes([__DIR__ . '/config.php' => config_path('sms.php'),]);
 	}
 
 	/**
@@ -23,14 +22,10 @@ class SMSServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		$this->mergeConfigFrom(
-			__DIR__ . '/config/sms.php', 'sms'
-		);
+		$this->mergeConfigFrom(__DIR__ . '/config.php', 'sms');
 
-		$this->app['sms'] = $this->app->share(
-			function () {
-				return new SMS();
-			}
-		);
+		$this->app['sms'] = $this->app->share(function () {
+			return new SMS();
+		});
 	}
 }

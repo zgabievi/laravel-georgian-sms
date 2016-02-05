@@ -2,137 +2,291 @@
 
 namespace Gabievi\SMS;
 
+use \Gabievi\SMS\SMSException;
+
 class SMS
 {
+
 	/**
-	 * @var
+	 * Default SMS provider
+	 * @type mixed
 	 */
-	public $config;
+	protected $provider;
+
+	/**
+	 * Credentials of chosen SMS provider
+	 * @type mixed
+	 */
+	protected $credentials;
 
 	/**
 	 * SMS constructor.
 	 */
 	public function __construct()
 	{
-		$this->config = config('sms.default') == 'msg' ? config('sms.providers.msg') : config('sms.providers.smsoffice');
+		$this->provider = config('sms.default');
+		$this->credentials = config('sms.providers')[$this->provider];
 	}
 
 	/**
-	 * @param $receiver
-	 * @param $message
+	 * Generate URL of provider \w purpose
+	 *
+	 * @param string $purpose
+	 * @param array $query
 	 *
 	 * @return mixed
 	 */
-	public function send($receiver, $message)
+	private function GenerateURL($purpose, $query = '')
 	{
-		if (config('sms.default') == 'msg') {
-			$url = 'http://msg.ge/bi/sendsms.php?username=' . $this->config['username'] . '&password=' . $this->config['password'] . '&client_id=' . $this->config['client_id'] . '&service_id=' . $this->config['service_id'] . '&to=' . $receiver . '&text=' . urlencode($message);
+		$provider_url = [];
 
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-			$data = curl_exec($ch);
-			$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			curl_close($ch);
+		// Generate provider urls
+		switch ($this->provider) {
+			case 'magti':
+				$provider_url = [
+					'send' => 'http://msg.ge/bi/sendsms.php',
+					'status' => 'http://msg.ge/bi/track.php',
+				];
+				break;
 
-			if ($httpcode >= 200 && $httpcode < 300) {
-				$response['success'] = true;
-				$response['code'] = explode('-', $data)[0];
-				$response['message_id'] = (int)explode('-', $data)[1];
-			} else {
-				$response['false'] = true;
-			}
-		} else {
-			$reference = uniqid();
-			$method = strlen($receiver) >= 4096 ? 'POST' : 'GET';
-			$url = 'http://smsoffice.ge/api/send.aspx';
+			case 'smsoffice':
+				$provider_url = [
+					'send' => 'http://smsoffice.ge/api/send.aspx',
+					'balance' => 'http://smsoffice.ge/api/getBalance',
+				];
+				break;
 
-			$parameters = [
-				'key' => $this->config['key'],
-				'destination' => $receiver,
-				'sender' => $this->config['sender'],
-				'content' => $message,
-				'reference' => $reference,
-			];
-
-			$ch = curl_init();
-
-			if ($method == 'POST') {
-				curl_setopt($ch, CURLOPT_URL, $url);
-				curl_setopt($ch, CURLOPT_POST, true);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $parameters);
-			} else {
-				$parameterString = '';
-
-				if (is_array($parameters) && count($parameters) != 0) {
-					$parameterString = '?' . http_build_query($parameters);
-				}
-
-				curl_setopt($ch, CURLOPT_URL, $url . $parameterString);
-			}
-
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-			$data = curl_exec($ch);
-			$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			curl_close($ch);
-
-			if ($httpcode >= 200 && $httpcode < 300) {
-				$response['success'] = true;
-				$response['code'] = (int)$data;
-				$response['reference'] = $reference;
-			} else {
-				$response['false'] = true;
-			}
+			case 'smsco':
+				$provider_url = [
+					'send' => 'http://smsco.ge/api/sendsms.php',
+					'status' => 'http://smsco.ge/api/getstatus.php',
+				];
+				break;
 		}
 
-		return $response;
+		return $provider_url[$purpose] != false
+			? $provider_url[$purpose] . $query
+			: false;
 	}
 
 	/**
-	 * @param $message_id
+	 * Generate http query for provider
 	 *
-	 * @return bool
-	 */
-	public function check($message_id)
-	{
-		if (config('sms.default') == 'msg') {
-			$url = 'http://msg.ge/bi/track.php?username=' . $this->config['username'] . '&password=' . $this->config['password'] . '&client_id=' . $this->config['client_id'] . '&service_id=' . $this->config['service_id'] . '&message_id=' . $message_id;
-
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-			$data = curl_exec($ch);
-			$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			curl_close($ch);
-
-			if ($httpcode >= 200 && $httpcode < 300) {
-				$response['success'] = true;
-				$response['code'] = (int)$data;
-			} else {
-				$response['false'] = true;
-			}
-
-			return $response;
-		} else {
-			return false;
-		}
-	}
-
-	/**
+	 * @param array $additional_params
+	 *
 	 * @return string
 	 */
-	public function getBalance()
+	private function BuildQuery($additional_params)
 	{
-		if (config('sms.default') == 'smsoffice') {
-			return file_get_contents('http://smsoffice.ge/api/getBalance?key=' . $this->config['key']);
-		} else {
-			return false;
+		return '?' . http_build_query($this->GetParams($additional_params));
+	}
+
+	/**
+	 * Generate params array for provider
+	 *
+	 * @param array $additional_params
+	 *
+	 * @return string
+	 */
+	private function GetParams($additional_params)
+	{
+		$provider_params = [];
+
+		// Generate provider params
+		switch ($this->provider) {
+			case 'magti':
+				$provider_params = [
+					'username' => $this->credentials['username'],
+					'password' => $this->credentials['password'],
+					'client_id' => $this->credentials['client_id'],
+					'service_id' => $this->credentials['service_id'],
+				];
+				break;
+
+			case 'smsoffice':
+				$provider_params = [
+					'key' => $this->credentials['key'],
+					'brand' => $this->credentials['brand'],
+				];
+				break;
+
+			case 'smsco':
+				$provider_params = [
+					'username' => $this->credentials['username'],
+					'password' => $this->credentials['password'],
+				];
+				break;
 		}
+
+		return array_merge($provider_params, $additional_params);
+	}
+
+	/**
+	 * cURL request \w additional params
+	 *
+	 * @param string $method
+	 * @param string $purpose
+	 * @param array $additional_params
+	 *
+	 * @return array
+	 */
+	private function cURL($purpose = 'send', $additional_params = [], $method = 'get')
+	{
+		$ch = curl_init();
+
+		if ($method == 'post') {
+			curl_setopt($ch, CURLOPT_URL, $this->GenerateURL($purpose));
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $this->GetParams($additional_params));
+		} else {
+			curl_setopt($ch, CURLOPT_URL, $this->GenerateURL($purpose, $this->BuildQuery($additional_params)));
+		}
+
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		$result = curl_exec($ch);
+		$info = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+
+		return [
+			'info' => $info,
+			'result' => $result,
+		];
+	}
+
+	/**
+	 * Send message with receivers
+	 *
+	 * @param $numbers
+	 * @param $message
+	 * @param array $additional_params
+	 *
+	 * @return array
+	 * @throws \Gabievi\SMS\SMSException
+	 */
+	public function Send($numbers, $message, $additional_params = [])
+	{
+		// send sms request to provider
+		switch ($this->provider) {
+			case 'magti':
+				$response = $this->cURL('send', array_merge([
+					'to' => implode(',', $numbers),
+					'message' => urlencode($message),
+				], $additional_params));
+
+				if ($response['info'] >= 200 && $response['info'] < 300) {
+					$result = explode('-', $response['result']);
+
+					return [
+						'code' => $result[0],
+						'msg_id' => (int)$result[1],
+					];
+				}
+				break;
+
+			case 'smsoffice':
+				$reference = uniqid();
+
+				$response = $this->cURL('send', array_merge([
+					'destination' => implode(',', $numbers),
+					'content' => $message,
+					'reference' => $reference,
+				], $additional_params));
+
+				if ($response['info'] >= 200 && $response['info'] < 300) {
+					return [
+						'code' => (int)$response['result'],
+						'reference' => $reference,
+					];
+				}
+				break;
+
+			case 'smsco':
+				$response = $this->cURL('send', array_merge([
+					'recipient' => implode(',', $numbers),
+					'message' => urlencode($message),
+					'balance' => true,
+				], $additional_params));
+
+				if ($response['info'] >= 200 && $response['info'] < 300) {
+					$result = explode(' ', $response['result']);
+
+					return [
+						'code' => $result[0] == 'OK' ? 0 : $result,
+						'msg_id' => $result[0] == 'OK' ? $result[2] : null,
+					];
+				}
+				break;
+		}
+
+		throw new SMSException(__FUNCTION__);
+	}
+
+	/**
+	 * Send scheduled messages
+	 *
+	 * @param $numbers
+	 * @param $message
+	 * @param $datetime
+	 *
+	 * @return mixed
+	 * @throws \Gabievi\SMS\SMSException
+	 */
+	public function Schedule($numbers, $message, $datetime)
+	{
+		switch ($this->provider) {
+			case 'smsco':
+				return $this->Send($numbers, $message, [
+					'schedule' => date('Y-m-d H:i:s', strtotime($datetime)),
+				]);
+				break;
+		}
+
+		throw new SMSException(__FUNCTION__);
+	}
+
+	/**
+	 * Get message status using message id
+	 *
+	 * @param $msg_id
+	 *
+	 * @return array
+	 * @throws \Gabievi\SMS\SMSException
+	 */
+	public function Status($msg_id)
+	{
+		switch ($this->provider) {
+			case 'magti':
+
+				return $this->cURL('status', [
+					'message_id' => $msg_id
+				]);
+				break;
+
+			case 'smsco':
+				return $this->cURL('status', [
+					'mes_id' => $msg_id
+				]);
+				break;
+		}
+
+		throw new SMSException(__FUNCTION__);
+	}
+
+	/**
+	 * Get balance from provider
+	 */
+	public function Balance()
+	{
+		switch ($this->provider) {
+			case 'smsoffice':
+				return file_get_contents($this->GenerateURL('balance'));
+				break;
+		}
+
+		throw new SMSException(__FUNCTION__);
 	}
 }
