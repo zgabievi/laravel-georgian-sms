@@ -1,6 +1,6 @@
-#SMS
+# SMS
 
-[![SMS](http://i.imgsafe.org/b793aa7.png)]()
+[![SMS](http://i.imgsafe.org/30339a3.png)](https://github.com/zgabievi/SMS)
 
 [![Latest Stable Version](https://poser.pugx.org/zgabievi/sms/version.png)](https://packagist.org/packages/zgabievi/sms)
 [![Total Downloads](https://poser.pugx.org/zgabievi/sms/d/total.png)](https://packagist.org/packages/zgabievi/sms)
@@ -12,9 +12,8 @@ Georgian SMS Providers Integration for [Laravel 5.*](http://laravel.com/)
 - [Installation](#installation)
     - [Composer](#composer)
     - [Laravel](#laravel)
-- [Usage](#usage)
-    - [MSG](#msg-magti-sms-gateway)
-    - [SMSOffice](#smsoffice)
+- [Methods](#methods)
+    - [Difference](#difference)
 - [Config](#config)
 - [License](#license)
 
@@ -28,160 +27,106 @@ Run composer command in your terminal.
 
 ### Laravel
 
-Open `config/app.php` and find the `providers` key. Add `SMSServiceProvider` to the array.
+Open `config/app.php`, find the `providers` and add `SMSServiceProvider` to the array.
 
 ```php
-Gabievi\SMS\SMSServiceProvider::class
+'providers' => [
+    // ...
+    Gabievi\SMS\SMSServiceProvider::class,
+],
 ```
 
-Find the `aliases` key and add `Facade` to the array. 
+Find the `aliases` and add `Facade` to the array. 
 
 ```php
-'SMS' => Gabievi\SMS\Facades\SMS::class
+'aliases' => [
+    // ...
+    'SMS' => Gabievi\SMS\SMSFacade::class,
+],
 ```
 
-## Usage
+## Methods
 
-### MSG (Magti SMS Gateway)
+| Method                                                 | MAGTI | SMSOFFICE | SMSCO |
+|--------------------------------------------------------|-------|-----------|-------|
+| SMS::Send($numbers, $message, $additional_params = []) |   +   |     +     |   +   |
+| SMS::Schedule($numbers, $message, $datetime)           |   -   |     -     |   +   |
+| SMS::Status($msg_id)                                   |   +   |     -     |   +   |
+| SMS::Balance()                                         |   -   |     +     |   -   |
 
-You can send messages using method:
+`$numbers` - comma separated numbers or number, with format: **9955XXXXXXXX**
+`$message` - Text message wich will be sent to the numbers.
 
-```php
-SMS::send($receiver, $message)
-```
-
-Where `$receiver` will be phone number without **+** or **00** symbols
-
-and `$message` will be text to be sent
-
-Return after success will be:
-
-```json
-{
-    "success": true,
-    "code": STATUS_CODE,
-    "message_id": MESSAGE_ID
-}
-```
-
-and after error:
-
-```json
-{
-    "success": false
-}
-```
-
----
-
-You can check status using method:
-
-```php
-SMS::check($message_id)
-```
-
-Where `$message_id` will be MESSAGE_ID from send method.
-
-Return after success will be:
-
-```json
-{
-    "success": true,
-    "code": STATUS_CODE
-}
-```
-
-and after error:
-
-```json
-{
-    "success": false
-}
-```
-
-### SMSOffice
-
-You can send messages using method:
-
-```php
-SMS::send($receiver, $message)
-```
-
-Where `$receiver` will be phone number without **+** or **00** symbols
-
-several numbers implode with **,**. Ex: 995592000000,995593111111,995594222222
-
-and `$message` will be text to be sent. Max: 480 symbols
-
-Return after success will be:
-
-```json
-{
-    "success": true,
-    "code": STATUS_CODE,
-    "reference": UNIQID
-}
-```
-
-and after error:
-
-```json
-{
-    "success": false
-}
-```
-
----
-
-To see your balance use:
-
-```php
-SMS::getBalance()
-```
-
-You will get number of messages you have left
+Allowed symbols table:
+| Symbol | Description                                                      |
+|--------|------------------------------------------------------------------|
+| a-z    | Characters in the range between **a** and **z** (case sensitive) |
+| A-Z    | Characters in the range between **A** and **Z** (case sensitive) |
+| 0-9    | Character in the range between **0** and **9**                   |
+| .      | Dot                                                              |
+| _      | Undercsore                                                       |
+| -      | Dash                                                             |
+| "      | Double Quotes                                                    |
+| '      | Single Quote                                                     |
+|        | Space                                                            |
 
 ## Config
 
 Publish SMS config file using command:
 
-```
-php artisan vendor:publish
-```
+    php artisan vendor:publish
 
-Created file `config\sms.php`. Inside you can change configuration as you wish.
+This will create file `config\sms.php`:
 
-Set default provider `smsoffice` or `msg`
+### Default SMS Provider
+
+You can specify any allowed sms service provider from list below:
+
+Allowed providers are: 'magti', 'smsoffice', 'smsco'
 
 ```php
-'default' => 'smsoffice'
+'default' => 'magti',
 ```
 
+### SMS Provider Credentials
+
+Here you must specify credentials required from provider
+
+This credentials will be used in protocol
+
+```php
+'providers' => [
+
+	'smsoffice' => [
+		'key' => env('SMS_PASSWORD', 'SECRET_KEY'),
+		'brand' => env('SMS_USERNAME', 'BRAND_NAME'),
+	],
+
+	'smsco' => [
+		'username' => env('SMS_USERNAME', 'USERNAME'),
+		'password' => env('SMS_PASSWORD', 'PASSWORD'),
+	],
+
+	'magti' => [
+		'username' => env('SMS_USERNAME', 'USERNAME'),
+		'password' => env('SMS_PASSWORD', 'PASSWORD'),
+		'client_id' => env('SMS_CLIENT_ID', 'CLIENT_ID'),
+		'service_id' => env('SMS_SERVICE_ID', 'SERVICE_ID'),
+	],
+
+],
+```
+
+## .ENV
 You can configure provider credentials in your config or `.env` file
 
-Environment keys are:
-
-#### MSG
-
-```
-MSG_USERNAME
-MSG_PASSWORD
-MSG_CLIENT_ID
-MSG_SERVICE_ID
-```
-
-#### SMSOffice
-
-```
-SMS_KEY
-SMS_SENDER
-```
+| KEY            | MAGTI | SMSOFFICE | SMSCO |
+|----------------|-------|-----------|-------|
+| SMS_USERNAME   |   +   |   BRAND   |   +   |
+| SMS_PASSWORD   |   +   |    KEY    |   +   |
+| SMS_CLIENT_ID  |   +   |     -     |   -   |
+| SMS_SERVICE_ID |   +   |     -     |   -  |
 
 ## License
 
 SMS is an open-sourced laravel package licensed under the [MIT license](http://opensource.org/licenses/MIT).
-
-## TODO
-- [ ] Need to be good tested
-- [ ] Add more providers
-- [ ] Write test cases
