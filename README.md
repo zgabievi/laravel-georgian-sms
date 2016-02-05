@@ -54,6 +54,7 @@ Find the `aliases` and add `Facade` to the array.
 | SMS::Balance()                                         |   -   |     +     |   -   |
 
 `$numbers` - comma separated numbers or number, with format: **9955XXXXXXXX**
+
 `$message` - Text message wich will be sent to the numbers.
 
 Allowed symbols to use in message:
