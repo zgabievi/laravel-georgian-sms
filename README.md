@@ -10,10 +10,9 @@ Georgian SMS Providers Integration for [Laravel 5.*](http://laravel.com/)
 
 ## Table of Contents
 - [Installation](#installation)
-    - [Composer](#composer)
-    - [Laravel](#laravel)
 - [Methods](#methods)
 - [Config](#config)
+- [Environment](#env)
 - [License](#license)
 
 ## Installation
