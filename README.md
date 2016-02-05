@@ -53,9 +53,11 @@ Find the `aliases` and add `Facade` to the array.
 | SMS::Status($msg_id)                                   |   +   |     -     |   +   |
 | SMS::Balance()                                         |   -   |     +     |   -   |
 
-`$numbers` - comma separated numbers or number, with format: **9955XXXXXXXX**
-
-`$message` - Text message wich will be sent to the numbers.
+- `$numbers` - comma separated numbers or number, with format: **9955XXXXXXXX**
+- `$message` - Text message wich will be sent to the numbers.
+- `$additional_params` - Array of key => values that will be used as http query. (Use this only if you know what you are doing)
+- `$datetime` - Datetime in format `Y-m-d H:i:s`.
+- `$msg_id` - Message ID, which you will get from provider, to check status in future.
 
 Allowed symbols to use in message:
 
