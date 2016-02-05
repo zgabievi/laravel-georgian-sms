@@ -59,7 +59,7 @@ Find the `aliases` and add `Facade` to the array.
 - `$datetime` - Datetime in format `Y-m-d H:i:s`.
 - `$msg_id` - Message ID, which you will get from provider, to check status in future.
 
-Allowed symbols to use in message:
+#### Allowed symbols to use in message:
 
 | Symbol | Description                                                      |
 |--------|------------------------------------------------------------------|
