@@ -12,7 +12,7 @@ Georgian SMS Providers Integration for [Laravel 5.*](http://laravel.com/)
 - [Installation](#installation)
 - [Methods](#methods)
 - [Config](#config)
-- [Environment](#env)
+- [.env](#env)
 - [License](#license)
 
 ## Installation
