@@ -63,7 +63,7 @@ Allowed symbols to use in message:
 | a-z    | Characters in the range between **a** and **z** (case sensitive) |
 | A-Z    | Characters in the range between **A** and **Z** (case sensitive) |
 | 0-9    | Character in the range between **0** and **9**                   |
-| .      | Dot                                                              |
+| .      | Point                                                            |
 | _      | Undercsore                                                       |
 | -      | Dash                                                             |
 | "      | Double Quotes                                                    |
