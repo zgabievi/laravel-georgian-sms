@@ -106,7 +106,7 @@ class SMS
 			case 'smsoffice':
 				$provider_params = [
 					'key' => $this->credentials['key'],
-					'brand' => $this->credentials['brand'],
+					'sender' => $this->credentials['brand'],
 				];
 				break;
 
