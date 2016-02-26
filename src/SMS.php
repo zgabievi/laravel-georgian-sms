@@ -169,11 +169,13 @@ class SMS
 	 */
 	public function Send($numbers, $message, $additional_params = [])
 	{
+		$to = is_array($numbers) ? implode(',', $numbers) : $numbers;
+		
 		// send sms request to provider
 		switch ($this->provider) {
 			case 'magti':
 				$response = $this->cURL('send', array_merge([
-					'to' => implode(',', $numbers),
+					'to' => $to,
 					'message' => urlencode($message),
 				], $additional_params));
 
@@ -191,7 +193,7 @@ class SMS
 				$reference = uniqid();
 
 				$response = $this->cURL('send', array_merge([
-					'destination' => implode(',', $numbers),
+					'destination' => $to,
 					'content' => $message,
 					'reference' => $reference,
 				], $additional_params));
@@ -206,7 +208,7 @@ class SMS
 
 			case 'smsco':
 				$response = $this->cURL('send', array_merge([
-					'recipient' => implode(',', $numbers),
+					'recipient' => $to,
 					'message' => urlencode($message),
 					'balance' => true,
 				], $additional_params));
