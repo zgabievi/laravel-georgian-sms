@@ -1,6 +1,6 @@
 # SMS
 
-[![SMS](http://i.imgsafe.org/30339a3.png)](https://github.com/zgabievi/SMS)
+[![SMS](https://i.imgsafe.org/fbbe4601fc.png)](https://github.com/zgabievi/SMS)
 
 [![Latest Stable Version](https://poser.pugx.org/zgabievi/sms/version.png)](https://packagist.org/packages/zgabievi/sms)
 [![Total Downloads](https://poser.pugx.org/zgabievi/sms/d/total.png)](https://packagist.org/packages/zgabievi/sms)
