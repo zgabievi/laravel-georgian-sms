@@ -1,12 +1,12 @@
-# SMS
+# laravel-georgian-sms
 
-[![SMS](https://i.imgsafe.org/fbbe4601fc.png)](https://github.com/zgabievi/SMS)
+> Some great updates are comming soon...
 
-[![Latest Stable Version](https://poser.pugx.org/zgabievi/sms/version.png)](https://packagist.org/packages/zgabievi/sms)
-[![Total Downloads](https://poser.pugx.org/zgabievi/sms/d/total.png)](https://packagist.org/packages/zgabievi/sms)
-[![License](https://poser.pugx.org/zgabievi/sms/license)](https://github.com/zgabievi/SMS)
+[![Latest Stable Version](https://poser.pugx.org/zgabievi/sms/version?format=flat-square)](https://packagist.org/packages/zgabievi/sms) [![Total Downloads](https://poser.pugx.org/zgabievi/sms/d/total?format=flat-square)](https://packagist.org/packages/zgabievi/sms) [![License](https://poser.pugx.org/zgabievi/sms/license?format=flat-square)](https://packagist.org/packages/zgabievi/sms)
 
-Georgian SMS Providers Integration for [Laravel 5.*](http://laravel.com/)
+| Georgian SMS |     |
+|:------------:|:----|
+| [![Georgian SMS](https://i.imgsafe.org/fbbe4601fc.png)](https://github.com/zgabievi/promocodes) | Georgian SMS providers service integration for [Laravel 5.*](http://laravel.com/) :sunglasses: Trying to make it perfect, easy to use and awesome package :tada: Pull requests are welcome. |
 
 ## Table of Contents
 - [Installation](#installation)
@@ -131,4 +131,10 @@ You can configure provider credentials in your config or `.env` file
 
 ## License
 
-SMS is an open-sourced laravel package licensed under the [MIT license](http://opensource.org/licenses/MIT).
+laravel-georgian-sms is licensed under a  [MIT License](https://github.com/zgabievi/laravel-georgian-sms/blob/master/LICENSE).
+
+## TODO
+- [ ] Create tests to check funtionality
+- [ ] Add more providers if they have sms sending service
+- [ ] Message validation before it will be sent
+- [ ] Make SMS object more Model like
