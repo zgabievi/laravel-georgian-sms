@@ -90,9 +90,9 @@ class SMSOfficeGateway extends Gateway implements SMSGateway
             'reference' => $reference,
         ], $params));
 
-        if ($response !== null && $response['Success']) {
+        if ($response !== null && $response->Success) {
             return [
-                'code' => (int)$response['result'],
+                'code' => (int)$response->ErrorCode,
                 'reference' => $reference,
             ];
         }
