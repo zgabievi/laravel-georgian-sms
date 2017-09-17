@@ -40,7 +40,7 @@ Find the `aliases` and add `Facade` to the array.
 ```php
 'aliases' => [
     // ...
-    'SMS' => Gabievi\SMS\SMSFacade::class,
+    'SMS' => Gabievi\SMS\Facades\SMS::class,
 ],
 ```
 
