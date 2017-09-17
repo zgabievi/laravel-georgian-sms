@@ -21,7 +21,7 @@ class SMS
      * @var array
      */
     protected $mapProviders = [
-        'margi' => 'Magti',
+        'magti' => 'Magti',
         'smsoffice' => 'SMSOffice',
         'smsco' => 'SMSCo',
     ];
