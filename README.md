@@ -1,12 +1,8 @@
 # laravel-georgian-sms
 
-> Some great updates are comming soon...
-
 [![Latest Stable Version](https://poser.pugx.org/zgabievi/sms/version?format=flat-square)](https://packagist.org/packages/zgabievi/sms) [![Total Downloads](https://poser.pugx.org/zgabievi/sms/d/total?format=flat-square)](https://packagist.org/packages/zgabievi/sms) [![License](https://poser.pugx.org/zgabievi/sms/license?format=flat-square)](https://packagist.org/packages/zgabievi/sms)
 
-| Georgian SMS |     |
-|:------------:|:----|
-| [![Georgian SMS](https://i.imgsafe.org/fbbe4601fc.png)](https://github.com/zgabievi/laravel-georgian-sms) | Georgian SMS providers service integration for [Laravel 5.*](http://laravel.com/) :sunglasses: Trying to make it perfect, easy to use and awesome package :tada: Pull requests are welcome. |
+> Georgian SMS providers service integration for [Laravel 5.*](http://laravel.com/) :sunglasses: Trying to make it perfect, easy to use and awesome package :tada: Pull requests are welcome.
 
 ## Table of Contents
 - [Installation](#installation)
