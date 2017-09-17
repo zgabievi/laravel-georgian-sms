@@ -25,5 +25,15 @@
 		"psr-4": {
 			"Gabievi\\SMS\\": "src/"
 		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Gabievi\\SMS\\SMSServiceProvider"
+			],
+			"aliases": {
+				"SMS": "Gabievi\\SMS\\Facades\\Promocodes"
+			}
+		}
 	}
 }

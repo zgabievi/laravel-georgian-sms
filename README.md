@@ -25,6 +25,11 @@ Run composer command in your terminal.
 
 ### Laravel
 
+#### For Laravel 5.5
+
+> If you are using Laravel 5.5, than installation is done. Otherwise follow next steps.
+
+#### For Laravel <= 5.4
 Open `config/app.php`, find the `providers` and add `SMSServiceProvider` to the array.
 
 ```php
@@ -47,14 +52,14 @@ Find the `aliases` and add `Facade` to the array.
 
 | Method                                                 | MAGTI | SMSOFFICE | SMSCO |
 |--------------------------------------------------------|-------|-----------|-------|
-| SMS::Send($numbers, $message, $additional_params = []) | **+** |   **+**   | **+** |
-| SMS::Schedule($numbers, $message, $datetime)           | **-** |   **-**   | **+** |
-| SMS::Status($msg_id)                                   | **+** |   **-**   | **+** |
-| SMS::Balance()                                         | **-** |   **+**   | **-** |
+| SMS::send($numbers, $message, $params = []) | **+** |   **+**   | **+** |
+| SMS::schedule($numbers, $message, $datetime)           | **-** |   **-**   | **+** |
+| SMS::status($msg_id)                                   | **+** |   **-**   | **+** |
+| SMS::balance()                                         | **-** |   **+**   | **-** |
 
 - `$numbers` - comma separated numbers or number, with format: **9955XXXXXXXX**
-- `$message` - Text message wich will be sent to the numbers.
-- `$additional_params` - Array of key => values that will be used as http query. (Use this only if you know what you are doing)
+- `$message` - Text message which will be sent to the numbers.
+- `$params` - Array of key => values that will be used as http query. (Use this only if you know what you are doing)
 - `$datetime` - Datetime in format `Y-m-d H:i:s`.
 - `$msg_id` - Message ID, which you will get from provider, to check status in future.
 
@@ -87,7 +92,7 @@ You can specify any allowed sms service provider from list below:
 Allowed providers are: 'magti', 'smsoffice', 'smsco'
 
 ```php
-'default' => 'magti',
+'default' => env('SMS_GATEWAY', 'margti'),
 ```
 
 ### SMS Provider Credentials
@@ -124,6 +129,7 @@ You can configure provider credentials in your config or `.env` file
 
 | KEY            | MAGTI | SMSOFFICE | SMSCO |
 |----------------|-------|-----------|-------|
+| SMS_GATEWAY    | **+** |   **+**   | **+** |
 | SMS_USERNAME   | **+** |   BRAND   | **+** |
 | SMS_PASSWORD   | **+** |    KEY    | **+** |
 | SMS_CLIENT_ID  | **+** |   **-**   | **-** |
@@ -132,9 +138,3 @@ You can configure provider credentials in your config or `.env` file
 ## License
 
 laravel-georgian-sms is licensed under a  [MIT License](https://github.com/zgabievi/laravel-georgian-sms/blob/master/LICENSE).
-
-## TODO
-- [ ] Create tests to check funtionality
-- [ ] Add more providers if they have sms sending service
-- [ ] Message validation before it will be sent
-- [ ] Make SMS object more Model like
