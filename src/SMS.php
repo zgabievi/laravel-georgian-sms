@@ -21,7 +21,7 @@ class SMS
      * @var array
      */
     protected $mapProviders = [
-        'margi' => 'Magti',
+        'magti' => 'Magti',
         'smsoffice' => 'SMSOffice',
         'smsco' => 'SMSCo',
     ];
@@ -33,12 +33,12 @@ class SMS
     {
         $provider = config('sms.default');
 
-        if (!array_key_exists($this->provider, $this->mapProviders)) {
+        if (!array_key_exists($provider, $this->mapProviders)) {
             throw new GatewayNotSupportedException($this->provider);
         }
 
         $this->provider = $this->mapProviders[$provider];
-        $gateway = "\Gabievi\SMS\Gateways\{$this->provider}Gateway";
+        $gateway = '\Gabievi\SMS\Gateways\\' . $this->provider . 'Gateway';
 
         $this->gateway = new $gateway();
     }

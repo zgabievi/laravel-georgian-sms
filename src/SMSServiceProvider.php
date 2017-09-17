@@ -24,11 +24,11 @@ class SMSServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->mergeConfigFrom(
-		    __DIR__ . '/config/sms.php', 'sms'
+		    __DIR__ . '/../config/sms.php', 'sms'
         );
-
-		$this->app['sms'] = $this->app->share(function () {
-			return new SMS();
-		});
+        
+        $this->app->singleton('sms', function ($app) {
+            return new SMS();
+        });
 	}
 }

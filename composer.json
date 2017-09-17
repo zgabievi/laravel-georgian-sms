@@ -23,7 +23,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Gabievi\\SMS\\": "src/"
+			"Gabievi\\SMS\\": "src"
 		}
 	},
 	"extra": {
@@ -32,7 +32,7 @@
 				"Gabievi\\SMS\\SMSServiceProvider"
 			],
 			"aliases": {
-				"SMS": "Gabievi\\SMS\\Facades\\Promocodes"
+				"SMS": "Gabievi\\SMS\\Facades\\SMS"
 			}
 		}
 	}
