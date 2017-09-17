@@ -32,7 +32,7 @@
 				"Gabievi\\SMS\\SMSServiceProvider"
 			],
 			"aliases": {
-				"SMS": "Gabievi\\SMS\\Facades\\Promocodes"
+				"SMS": "Gabievi\\SMS\\Facades\\SMS"
 			}
 		}
 	}
