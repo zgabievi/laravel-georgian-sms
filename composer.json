@@ -23,7 +23,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Gabievi\\SMS\\": "src/"
+			"Gabievi\\SMS\\": "src"
 		}
 	},
 	"extra": {
