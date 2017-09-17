@@ -84,13 +84,13 @@ class SMSOfficeGateway extends Gateway implements SMSGateway
         $to = is_array($numbers) ? implode(',', $numbers) : $numbers;
         $reference = uniqid();
 
-        $response = $this->cURL('send', array_merge([
+        $response = $this->getContent('send', array_merge([
             'destination' => $to,
             'content' => $message,
             'reference' => $reference,
         ], $params));
 
-        if ($response['info'] >= 200 && $response['info'] < 300) {
+        if ($response !== null && $response['Success']) {
             return [
                 'code' => (int)$response['result'],
                 'reference' => $reference,

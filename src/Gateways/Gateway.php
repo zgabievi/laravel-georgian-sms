@@ -66,4 +66,19 @@ class Gateway
             'result' => $result,
         ];
     }
+
+    /**
+     * Simplest method to get content from gateway.
+     *
+     * @param string $action
+     * @param array $params
+     *
+     * @return mixed
+     */
+    public function getContent($action = 'send', array $params = [])
+    {
+        $content = file_get_contents($this->generateUrl($action, $params));
+
+        return json_decode($content);
+    }
 }
