@@ -57,7 +57,7 @@ class SMSOfficeGateway extends Gateway implements SMSGateway
      */
     public function generateUrl($action, $params = null)
     {
-        $query = $params ? $this->buildQuery($params) : '';
+        $query = $params ? $this->buildQuery($this->getParams($params)) : '';
 
         switch ($action) {
             case 'send':
