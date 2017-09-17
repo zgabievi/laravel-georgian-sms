@@ -57,7 +57,7 @@ class SMSOfficeGateway extends Gateway implements SMSGateway
      */
     public function generateUrl($action, $params = null)
     {
-        $query = $params ? $this->buildQuery($this->getParams($params)) : '';
+        $query = $params !== null ? $this->buildQuery($this->getParams($params)) : '';
 
         switch ($action) {
             case 'send':
@@ -103,10 +103,12 @@ class SMSOfficeGateway extends Gateway implements SMSGateway
     /**
      * Return balance left on current gateway provider.
      *
-     * @return int
+     * @return array
      */
     public function balance()
     {
-        return (int)file_get_contents($this->generateUrl('balance'));
+        return [
+            'balance' => (int)$this->getContent('balance'),
+        ];
     }
 }
